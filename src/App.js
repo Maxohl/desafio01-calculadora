@@ -21,6 +21,10 @@ const App = () => {
     setCurrentNumber(prev => `${prev === '0' ? '' : prev}${num}`)
   }
 
+  const handleAddPeriod = (period) => {
+    setCurrentNumber(prev => `${prev === '0' ? '' : prev}${period}`)
+  }
+
   const handleSumNumbers = () => {
 
     if(firstNumber === '0'){
@@ -29,6 +33,34 @@ const App = () => {
         setOperation('+')
     }else {
       const sum = Number(firstNumber) + Number(currentNumber);
+      setCurrentNumber(String(sum))
+      setOperation('')
+    }
+
+  }
+
+  const handleMultiplyNumbers = () => {
+
+    if(firstNumber === '0'){
+        setFirstNumber(String(currentNumber));
+        setCurrentNumber('0')
+        setOperation('x')
+    }else {
+      const sum = Number(firstNumber) * Number(currentNumber);
+      setCurrentNumber(String(sum))
+      setOperation('')
+    }
+
+  }
+
+  const handleDivideNumbers = () => {
+
+    if(firstNumber === '0'){
+        setFirstNumber(String(currentNumber));
+        setCurrentNumber('0')
+        setOperation('/')
+    }else {
+      const sum = Number(firstNumber) / Number(currentNumber);
       setCurrentNumber(String(sum))
       setOperation('')
     }
@@ -59,6 +91,12 @@ const App = () => {
           case '-':
             handleMinusNumbers();
             break;
+          case 'x':
+            handleMultiplyNumbers();
+            break;
+          case '/':
+            handleDivideNumbers();
+            break;
           default: 
             break;
         }
@@ -71,10 +109,10 @@ const App = () => {
       <Content>
         <Input value={currentNumber}/>
         <Row>
-          <Button label="x"/>
-          <Button label="/"/>
+          <Button label="x" onClick={handleMultiplyNumbers}/>
+          <Button label="/" onClick={handleDivideNumbers}/>
           <Button label="c" onClick={handleOnClear}/>
-          <Button label="."/>
+          <Button label="." onClick={() => handleAddPeriod('.')}/>
         </Row>
         <Row>
           <Button label="7" onClick={() => handleAddNumber('7')}/>
